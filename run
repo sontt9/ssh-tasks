@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function main()
+{
+	# only show output on fail
+	# NOISY=${NOISY:-false}
+	# if [[ $NOISY = true ]]; then
+	# 	# set -eo pipefail
+	# fi
+
+	# load app
+	local from=${TASKS_PATH:-"$PWD"}
+	source "$from/src/helpers.sh"
+	source "$from/src/ssh.sh"
+
+	# colours
+	_set_colours
+
+	# loads task
+	local task=${1:-"help"}; shift
+	source "$from/src/tasks/$task.sh"
+
+	# server manifest
+	local manifest=${MANIFEST:-"$from/manifest"}
+	servers=${2:-''}
+	_is_file $manifest && read -a servers <<< $(cat $manifest)
+
+	# declare runner
+	_is_array servers && runner=("${servers[@]}")
+	_is_array servers == false && runner=($servers)
+
+	# run task
+	ASYNC=${ASYNC:-false}
+	for run in "${servers[@]}"; do
+		echo "${yellow}--->${green} $run ${blue}$task${reset}"
+
+		# run in foreground
+		[ $ASYNC = false ] && _task $run "$@"
+
+		# run in background
+		[ $ASYNC = true ] && _task $run "$@" &
+		[ $ASYNC = true ] && echo '	running in background'
+	done
+}
+
+main $@
