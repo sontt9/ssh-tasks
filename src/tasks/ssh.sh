@@ -1,6 +1,6 @@
 #!/bin/bash
 
 _task() {
-	echo $2
-	_ssh $1 "$2"
+	local host=$1; shift
+	_ssh $host $@
 }
