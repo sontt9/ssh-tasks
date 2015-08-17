@@ -4,11 +4,18 @@ A very simple task runner for quick and easy server management over SSH
 `./run update jimbob.com`
 
 ## Manifests
-Manifests allow you run tasks against multiple hosts easily. It's simple a file with a SSH host delimited by a newline.
+Manifests allow you run tasks against multiple hosts easily.
 
-For example, create your manifest file `"jimbob.com\nbarrysmith.com" > manifest` and then when you `./run update`, it will run against all hosts inside the manifest file.
+An example manifest:
 
-**Specify your own manifest** 
+```
+jimbob.com
+barrysmith.com
+```
+
+Now `./run update` will update jimbob.com and barrysmith.com.
+
+**Specify a different manifest** 
 
 ssh-tasks will always search for the manifest file, but you can provide your own manifests easily. 
 
