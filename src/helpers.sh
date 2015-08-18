@@ -1,8 +1,16 @@
 #!/bin/bash
 
 _is_array() {
-	  local variable_name=$1
-	  [[ "$(declare -p $variable_name)" =~ "declare -a" ]]
+	local variable_name=$1
+	[[ "$(declare -p $variable_name)" =~ "declare -a" ]]
+}
+
+_is_not_array() {
+	! _is_array $1
+}
+
+_is_empty() {
+	[ "$1" = "" ]
 }
 
 _is_file() {

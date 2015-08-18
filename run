@@ -22,16 +22,16 @@ function main()
 
 	# server manifest
 	local manifest=${MANIFEST:-"$from/manifest"}
-	servers=${2:-''}
-	_is_file $manifest && read -a servers <<< $(cat $manifest)
+	servers=${1:-''}
+	_is_file $manifest && _is_empty $servers && read -a servers <<< $(cat $manifest)
 
 	# declare runner
 	_is_array servers && runner=("${servers[@]}")
-	_is_array servers == false && runner=($servers)
+	_is_not_array servers && runner[0]=$servers
 
 	# run task
 	ASYNC=${ASYNC:-false}
-	for run in "${servers[@]}"; do
+	for run in "${runner[@]}"; do
 		echo "${yellow}--->${green} $run ${blue}$task${reset}"
 
 		# run in foreground
