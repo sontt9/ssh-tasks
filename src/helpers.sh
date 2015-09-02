@@ -9,6 +9,16 @@ _is_not_array() {
 	! _is_array $1
 }
 
+_in_array() {
+	local e
+	for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+	return 1
+}
+
+_not_in_array() {
+	[ _in_array $@ = 0 ]
+}
+
 _is_empty() {
 	[ "$1" = "" ]
 }
