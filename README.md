@@ -2,8 +2,10 @@
 
 An extremely simple task runner for quick and easy server management over SSH.
 
-`./run ssh on example.com sudo yum update -y`
-`./run ssh on example.com echo "hello from hostname"`
+`./run ssh on example.com sudo yum update -y` 
+
+`./run ssh on example.com echo "hello from hostname"` 
+
 `./run ssh on example.com`
 
 ## Manifests
@@ -17,8 +19,10 @@ example.org
 
 By default, ssh-tasks will search for a file called manifest.
 
-`./run ssh sudo reboot`
-`./run ssh on manifest sudo reboot`
+`./run ssh sudo reboot` 
+
+`./run ssh on manifest sudo reboot` 
+
 `./run ssh on ~/servers/custom_manifest hostname`
 
 ## Tasks
@@ -34,8 +38,10 @@ function _task() {
 }
 ```
 
-`./run upgrade on example.com`
-`./run upgrade on manifest`
+`./run upgrade on example.com` 
+
+`./run upgrade on manifest` 
+
 `./run upgrade` will use the default manifest file
 
 ### Local tasks
