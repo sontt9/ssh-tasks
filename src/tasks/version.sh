@@ -1,0 +1,1 @@
+cat "$TASKS_PATH/VERSION" && exit
