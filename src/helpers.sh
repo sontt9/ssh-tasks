@@ -1,5 +1,3 @@
-#!/bin/bash
-
 _is_array() {
 	local variable_name=$1
 	[[ "$(declare -p $variable_name)" =~ "declare -a" ]]
@@ -23,9 +21,16 @@ _is_empty() {
 	[ "$1" = "" ]
 }
 
+_is_not_empty() {
+	[ "$1" != "" ]
+}
+
 _is_file() {
-	local string=$1
-	[[ -e $string ]]
+	[[ -e $1 ]]
+}
+
+_is_not_file() {
+	! _is_file $1
 }
 
 _set_colours() {

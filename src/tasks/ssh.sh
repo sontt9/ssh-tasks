@@ -1,6 +1,4 @@
-#!/bin/bash
-
-_task() {
+function _task() {
 	local host=$1; shift
-	_ssh $host $@
+	_ssh $host "$@"
 }
