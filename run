@@ -1,47 +1,4 @@
 #!/bin/bash
-
-function main()
-{
-	# load app
-	export TASKS_PATH=${TASKS_PATH:-"$PWD"}
-	source "$TASKS_PATH/src/helpers.sh"
-	source "$TASKS_PATH/src/ssh.sh"
-	source "$TASKS_PATH/src/load_task.sh"
-
-	# colours
-	_set_colours
-
-	# get task name and remove from $@
-	local task=${1:-"help"}; shift
-
-	# find manifest
-	local manifest=${1:-""}
-	local servers
-	_is_empty $manifest && manifest=${TASKS_MANIFEST:-"$TASKS_PATH/manifest"} # use default manifests if none was provided
-	_is_file $manifest && read -a servers <<< $(cat $manifest) # load manifest into array
-
-	# no manifest found
-	_is_not_file $manifest && echo "${red}ERROR${reset} You're missing a manifest file. See the readme for help." && exit 1
-
-	# set runner as an array from servers
-	_is_array servers && runner=("${servers[@]}")
-	_is_not_array servers && runner[0]=$servers
-
-	# load task
-	_load_task $task $runner "$@"
-
-	# run task
-	local background=${TASKS_BACKGROUND:-false}
-	for run in "${runner[@]}"; do
-		echo "${yellow}--->${green} $run ${blue}$task${reset}"
-
-		# run in foreground
-		[ $background = false ] && _task $run "$@"
-
-		# run in background
-		[ $background = true ] && _task $run "$@" &
-		[ $background = true ] && echo '    running in background'
-	done
-}
-
+export TASKS_PATH=${TASKS_PATH:-"$PWD"}
+source "$TASKS_PATH/src/main.sh"
 main "$@"

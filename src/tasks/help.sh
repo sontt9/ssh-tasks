@@ -1,8 +1,6 @@
-echo ''
-echo 'ssh-tasks:'
-echo 'reboot		restart servers'
-echo 'update		update servers'
-echo 'ssh		send a command'
-echo 'help		this'
-echo ''
-exit
+echo ""
+echo "${blue}> ${green}SSH TASKS${reset}"
+echo "ssh		send a command to a server"
+echo "help		you're looking at it"
+echo ""
+exit # required to stop task runner
