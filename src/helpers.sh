@@ -46,6 +46,10 @@ function _indent() {
 	printf "\t"
 }
 
-function _is_hostname {
+function _is_hostname() {
 	[[ "$1" =~ ^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$ ]]
+}
+
+function _run() {
+	$TASKS_PATH/run "$@"
 }

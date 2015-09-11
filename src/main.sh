@@ -1,25 +1,24 @@
 function main()
 {
-	# load app
+	export TASKS_SRC=${TASKS_SRC:-"$autopath"}
 	export TASKS_PATH=${TASKS_PATH:-"$PWD"}
-	source "$TASKS_PATH/src/helpers.sh"
-	source "$TASKS_PATH/src/ssh.sh"
-	source "$TASKS_PATH/src/load_task.sh"
 
-	# colours
+	# load ssh-tasks
+	source "$TASKS_SRC/src/helpers.sh"
+	source "$TASKS_SRC/src/ssh.sh"
+	source "$TASKS_SRC/src/load_task.sh"
+
+	# set colour variables
 	_set_colours
 
-	# get task name and remove from $@
+	# get task name as $1 and remove from $@
 	local task=${1:-"help"}; shift
 
+	# allow usage of 'on' anywhere in params
+	local on=false && [ "$1" = "on" ] && shift && on=true
 
-	# find servers to task upon
 	local manifest
 	local servers
-
-	# allow usage of on command preffix
-	local on=false
-	[ "$1" = "on" ] && shift && on=true
 
 	# manifest is included in params
 	$on && manifest=${1:-""} && shift
@@ -27,20 +26,20 @@ function main()
 	# load manifest file into an array
 	$on && _is_file $manifest && read -a servers <<< $(cat $manifest)
 
-	# no manifest was found, so try it as a hostname instead (only valid after on preffix)
+	# no manifest was found, so try that param as a hostname instead
 	$on && _is_empty $servers && _is_hostname $manifest && servers=$manifest
 
 	# no manifest provided, use default manifest instead
-	[ $on = false ] &&  _is_empty $servers && _is_file ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"} && read -a servers <<< $(cat ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"})
+	[ $on = false ] && _is_empty $servers && _is_file ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"} && read -a servers <<< $(cat ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"})
 
 	# no servers found
-	_is_empty $servers && echo "${red}ERROR${reset} You're missing a manifest file. See the readme for help." && exit 1
+	_is_empty $servers && echo "${red}ERROR${reset} You didn't supply a manifest file. See README.md for help." && exit 1
 
 	# set runner as an array from servers
-	_is_array servers && runner=("${servers[@]}")
-	_is_not_array servers && runner[0]=$servers
+	_is_array servers && local runner=("${servers[@]}")
+	_is_not_array servers && local runner[0]=$servers
 
-	# load task
+	# load task file
 	_load_task $task "$@"
 
 	# run task

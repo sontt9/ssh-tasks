@@ -1,4 +1,14 @@
 #!/bin/bash
+
+export TASKS_SRC=${TASKS_SRC:-""}
 export TASKS_PATH=${TASKS_PATH:-"$PWD"}
-source "$TASKS_PATH/src/main.sh"
+
+# find directory if provided
+if [ $TASKS_SRC = ""]; then
+	src=$(readlink -f $0 &> /dev/null || readlink $0)
+	export TASKS_SRC=$(dirname $src)
+fi
+
+# load and start
+source "$TASKS_SRC/src/main.sh"
 main "$@"
