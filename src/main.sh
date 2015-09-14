@@ -3,10 +3,10 @@ function main()
 	export TASKS_SRC=${TASKS_SRC:-"$autopath"}
 	export TASKS_PATH=${TASKS_PATH:-"$PWD"}
 
-	# load ssh-tasks
+	# load source
 	source "$TASKS_SRC/src/helpers.sh"
 	source "$TASKS_SRC/src/ssh.sh"
-	source "$TASKS_SRC/src/load_task.sh"
+	source "$TASKS_SRC/src/load.sh"
 
 	# set colour variables
 	_set_colours
@@ -33,14 +33,14 @@ function main()
 	[ $on = false ] && _is_empty $servers && _is_file ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"} && read -a servers <<< $(cat ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"})
 
 	# no servers found
-	_is_empty $servers && echo "${red}ERROR${reset} You didn't supply a manifest file. See README.md for help." && exit 1
+	_is_empty $servers && echo "${red}ERROR${reset} Could not find manifest or host. See README.md for help." && exit 1
 
 	# set runner as an array from servers
 	_is_array servers && local runner=("${servers[@]}")
 	_is_not_array servers && local runner[0]=$servers
 
 	# load task file
-	_load_task $task "$@"
+	_load $task "$@"
 
 	# run task
 	local background=${TASKS_BACKGROUND:-false}
