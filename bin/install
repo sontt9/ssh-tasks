@@ -1,6 +1,14 @@
 #!/bin/bash
 INSTALL_TO=${INSTALL_TO:-"/usr/local/lib/ssh-tasks"}
-mkdir -p $INSTALL_TO
+INSTALL_BIN=${INSTALL_BIN:-"/usr/local/bin"}
+
+echo "INSTALL_TO: $INSTALL_TO"
+echo "INSTALL_BIN: $INSTALL_BIN"
+
+if [[ ! -d $INSTALL_TO ]]; then
+	mkdir -p $INSTALL_TO
+fi
+
 cp -rf "$(dirname $0)/../" "$INSTALL_TO"
-ln -sf "/usr/local/bin/run" "$INSTALL_TO/bin/run"
-run
+
+ln -sf "$INSTALL_TO/bin/run" "$INSTALL_BIN/run"
