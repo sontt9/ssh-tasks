@@ -1,0 +1,6 @@
+#!/bin/bash
+INSTALL_TO=${INSTALL_TO:-"/usr/local/lib/ssh-tasks"}
+mkdir -p $INSTALL_TO
+cp -rf "$(dirname $0)/../" "$INSTALL_TO"
+ln -sf "/usr/local/bin/run" "$INSTALL_TO/bin/run"
+run
