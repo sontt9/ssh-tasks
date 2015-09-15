@@ -4,7 +4,7 @@ An extremely simple task runner for quick and easy server management over SSH.
 
 `./run ssh on example.com sudo yum update -y` 
 
-`./run ssh on example.com echo "hello from hostname"` 
+`./run ssh on example.com echo "hello from $hostname"` 
 
 `./run ssh on example.com`
 
@@ -46,7 +46,7 @@ function _task() {
 
 ### Local tasks
 
-You can also create scripts that run once locally.
+You can also create scripts that run once, locally.
 
 ```
 # tasks/bundle-install-all.sh
@@ -60,7 +60,6 @@ done
 
 exit # this is required to stop the task runner!
 
-done
 ```
 
 `./run bundle-install-all ~/Repositories/` will find all subdirectories containing Gemfiles and run bundle install.
@@ -69,7 +68,7 @@ done
 
 | env        |            |
 | ------------- |-------------| 
-| TASKS_BACKGROUND | will put tasks into the background the builtin jobs if set |
+| TASKS_BACKGROUND | will put tasks into the background with the builtin jobs command if provided |
 | TASKS_PATH | installation directory |
 | TASKS_MANIFEST | default manifest file |
 | SSH_BINARY | location invoked for ssh command  |
