@@ -14,7 +14,7 @@ A simple bash task runner, ideal for quick and easy server management over SSH.
 
 ## Manifests
 
-Simply a file containing hosts delimited by a line break.
+Simply a file containing hosts delimited by a line break, used to run a task on multiple hosts at once.
 
 ```
 example.com
@@ -42,11 +42,11 @@ _task() {
 }
 ```
 
-`./run upgrade on example.com` 
+`run upgrade on example.com` 
 
-`./run upgrade on manifest` 
+`run upgrade on manifest` 
 
-`./run upgrade` will use the default manifest file
+`run upgrade` will use the default manifest file
 
 ### Local tasks
 
