@@ -1,12 +1,16 @@
 # SSH tasks
 
-An extremely simple task runner for quick and easy server management over SSH.
+A simple bash task runner, ideal for quick and easy server management over SSH.
 
-`./run ssh on example.com sudo yum update -y` 
+`run $taskname on $hostname $params`
 
-`./run ssh on example.com echo "hello from $hostname"` 
 
-`./run ssh on example.com`
+
+`run ssh on example.com sudo yum update -y` 
+
+`run ssh on example.com echo "hello from $hostname"` 
+
+`run ssh on example.com`
 
 ## Manifests
 
@@ -19,11 +23,11 @@ example.org
 
 By default, ssh-tasks will search for a file called manifest.
 
-`./run ssh sudo reboot` 
+`run ssh sudo reboot` 
 
-`./run ssh on manifest sudo reboot` 
+`run ssh on manifest sudo reboot` 
 
-`./run ssh on ~/servers/custom_manifest hostname`
+`run ssh on ~/servers/custom_manifest hostname`
 
 ## Tasks
 
@@ -31,7 +35,7 @@ Tasks are stored under the tasks directory. Each task is just a bash file ending
 
 ```
 # tasks/upgrade.sh
-function _task() {
+_task() {
   echo $1 # hostname
   _ssh $1 "sudo apt-get update && sudo apt-get upgrade"
   echo "Done!"
@@ -62,7 +66,7 @@ exit # this is required to stop the task runner!
 
 ```
 
-`./run bundle-install-all ~/Repositories/` will find all subdirectories containing Gemfiles and run bundle install.
+`run bundle-install-all ~/Repositories/` will find all subdirectories containing Gemfiles and run bundle install.
 
 ## Options
 
