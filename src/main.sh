@@ -1,7 +1,6 @@
-function main()
-{
-	export TASKS_SRC=${TASKS_SRC:-"$autopath"}
-	export TASKS_PATH=${TASKS_PATH:-"$PWD"}
+main() {
+	TASKS_SRC=${TASKS_SRC:-"$autopath"}
+	TASKS_PATH=${TASKS_PATH:-"$PWD"}
 
 	# load source
 	source "$TASKS_SRC/src/helpers.sh"

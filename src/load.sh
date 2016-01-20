@@ -1,4 +1,4 @@
-function _load() {
+_load() {
 	local task=$1; shift
 
 	local userdefined="$TASKS_PATH/tasks/$task.sh"
