@@ -1,15 +1,13 @@
 echo ""
-echo "${blue}  > ${green}SSH TASKS${reset}"
+echo "${blue}  > ${green}ssh-tasks $(cat $TASKS_SRC/VERSION)${reset}"
+echo "    ssh"
+echo "    version"
 echo ""
-echo "    ssh      send a command to a server"
-echo "    help     you're looking at it"
-echo ""
-echo "${blue}  > ${green}YOUR TASKS${reset}"
-echo ""
+echo "${blue}  > ${green}tasks${reset}"
 for t in $TASKS_PATH/tasks/*.sh; do
 	t=$(basename $t)
 	t=${t%.*}
 	echo "    $t"
 done
 echo ""
-exit # required to stop task runner
+exit 0 # required to stop task runner
