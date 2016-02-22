@@ -2,9 +2,15 @@
 
 A simple bash task runner, ideal for quick and easy server management over SSH.
 
+## Install
+
+```
+git clone https://github.com/Paperback/ssh-tasks.git && ./ssh-tasks/bin/install
+```
+
+## Usage
+
 `run $taskname on $hostname $params`
-
-
 
 `run ssh on example.com sudo yum update -y` 
 
@@ -12,9 +18,9 @@ A simple bash task runner, ideal for quick and easy server management over SSH.
 
 `run ssh on example.com`
 
-## Manifests
+### Manifests
 
-Simply a file containing hosts delimited by a line break, used to run a task on multiple hosts at once.
+A file containing hosts delimited by a line break, used to run a task on multiple hosts at once.
 
 ```
 example.com
@@ -25,11 +31,14 @@ By default, ssh-tasks will search for a file called manifest.
 
 `run ssh sudo reboot` 
 
-`run ssh on manifest sudo reboot` 
+`run ssh on manifest.txt sudo reboot` 
 
-`run ssh on ~/servers/custom_manifest hostname`
+`run ssh on ~/servers/custom hostname`
 
-## Tasks
+ssh-tasks will search for the manifest file in your current directory by default.
+
+
+### Tasks
 
 Tasks are stored under the tasks directory. Each task is just a bash file ending in .sh with a _task function.
 
@@ -44,16 +53,29 @@ _task() {
 
 `run upgrade on example.com` 
 
-`run upgrade on manifest` 
+`run upgrade on manifest.txt` 
 
 `run upgrade` will use the default manifest file
 
-### Local tasks
+#### Tasks from within tasks
 
-You can also create scripts that run once, locally.
 
 ```
-# tasks/bundle-install-all.sh
+_task() {
+	local host=$1
+	echo "Running another_task on $host"
+	_run another_task on $host 
+}
+```
+
+This will echo Hello from 
+
+#### Local tasks
+
+You can also create scripts that run once, locally. Just make sure to exit before the end of the file.
+
+```
+# tasks/install_all_gems.sh
 
 for repo in $1/*; do
 	if [[ -f "$repo/Gemfile" ]]; then
@@ -62,13 +84,14 @@ for repo in $1/*; do
 	fi
 done
 
-exit # this is required to stop the task runner!
+exit 0 # this is required to stop the task runner running multiple times
 
 ```
 
-`run bundle-install-all ~/Repositories/` will find all subdirectories containing Gemfiles and run bundle install.
+`run install_all_gems ~/Repositories/` will find all subdirectories containing Gemfiles and run bundle install.
 
-## Options
+
+## Runtime options
 
 | env        |            |
 | ------------- |-------------| 
