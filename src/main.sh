@@ -31,15 +31,15 @@ main() {
 	# no manifest provided, use default manifest instead
 	[ $on = false ] && _is_empty $servers && _is_file ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"} && read -a servers <<< $(cat ${TASKS_MANIFEST:-"$TASKS_PATH/manifest"})
 
+	# load task file
+	_load $task "$@"
+
 	# no servers found
 	_is_empty $servers && echo "${red}ERROR${reset} Could not find manifest or host. See README.md for help." && exit 1
 
 	# set runner as an array from servers
 	_is_array servers && local runner=("${servers[@]}")
 	_is_not_array servers && local runner[0]=$servers
-
-	# load task file
-	_load $task "$@"
 
 	# run task
 	local background=${TASKS_BACKGROUND:-false}

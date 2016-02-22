@@ -7,5 +7,5 @@ _load() {
 	local predefined="$TASKS_SRC/src/tasks/$task.sh"
 	_is_file $predefined && source $predefined && return 1
 
-	echo "${red}No such task exists: $task${reset}" && echo "searched in $userdefined and $predefined" && exit 1
+	echo "${red}No such task exists: $task${reset}" && echo "searched in $userdefined" && exit 1
 }
