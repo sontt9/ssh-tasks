@@ -14,5 +14,5 @@ if [ -f "$TASKS_SRC/src/main.sh" ]; then
 	main "$@"
 else
 	# install not found
-	echo "Could not find installation directory" && exit 1
+	echo "Could not find ssh-tasks installation directory" && exit 1
 fi

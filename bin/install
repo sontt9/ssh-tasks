@@ -5,19 +5,20 @@ install() {
 	local INSTALL_BIN=${INSTALL_BIN:-"/usr/local/bin/run"}
 	local INSTALL_FROM=${INSTALL_FROM:-"$(dirname $0)/../"}
 
-	mkdir -p $INSTALL_TO
-
+	echo ""
 	echo "INSTALL_TO=$INSTALL_TO"
 	echo "INSTALL_BIN=$INSTALL_BIN"
-
+	echo "Do you want to install ssh-tasks there?"
 	echo ""
-	echo "Press anything to continue or cancel to abort"
-	read pause
 
+	echo "Press anything to continue installing or cancel to abort."
+	read pause
+	sleep 3 # give some delay to cancel installation
+
+	mkdir -p $INSTALL_TO
 	cp -rf "$INSTALL_FROM" "$INSTALL_TO"
 	ln -sf "$INSTALL_TO/bin/run" "$INSTALL_BIN"
-
-	echo "Installed!"
+	echo "Installed ssh-tasks! Check out README.md for usage."
 	return 0
 }
 
