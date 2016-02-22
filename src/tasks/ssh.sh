@@ -1,4 +1,4 @@
-function _task() {
+_task() {
 	local host=$1; shift
 	_ssh $host "$@"
 }

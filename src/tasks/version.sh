@@ -1,1 +1,1 @@
-cat "$TASKS_PATH/VERSION" && exit
+cat "$TASKS_SRC/VERSION" && exit 0
