@@ -3,7 +3,7 @@ export TASKS_SRC=${TASKS_SRC:-""}
 export TASKS_PATH=${TASKS_PATH:-"$PWD"}
 
 # find directory if none provided
-if [ $TASKS_SRC = ""]; then
+if [ "$TASKS_SRC" == "" ]; then
 	src=$(readlink -f $0 &> /dev/null || readlink $0)
 	export TASKS_SRC="$(dirname $src)/../"
 fi

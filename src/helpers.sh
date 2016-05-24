@@ -51,5 +51,5 @@ _is_hostname() {
 }
 
 _run() {
-	$TASKS_PATH/run "$@"
+	$TASKS_SRC/bin/run "$@"
 }
