@@ -44,7 +44,8 @@ main() {
 	# run task
 	local background=${TASKS_BACKGROUND:-false}
 	for run in "${runner[@]}"; do
-		echo "${yellow}--->${green} $run ${blue}$task${reset}"
+		local start=$(date +"%T")
+		echo "${yellow}---> ${green}$run ${blue}$task${reset} @ ${blue}${start}${reset}"
 
 		# run in foreground
 		[ $background = false ] && _task $run "$@"

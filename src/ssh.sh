@@ -1,4 +1,4 @@
-function _ssh() {
+_ssh() {
 	local ssh_path=${SSH_BINARY:-$(which ssh)}
 	$ssh_path -t "$@"
 }
